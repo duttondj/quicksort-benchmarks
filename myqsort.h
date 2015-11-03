@@ -15,6 +15,6 @@ typedef std::vector<double> ArrayType;
 
 int pivot(ArrayType& theArray, int first, int mid, int last);
 
-void myqsort(ArrayType& theArray, int first, int last, bool con);
+void myqsort(ArrayType& theArray, int first, int mid, int last, bool con);
 
 #endif

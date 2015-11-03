@@ -45,7 +45,7 @@ int main()
 		}
 	}
 
-	std::cout << "Finished sequential sorts" << end;
+	std::cout << "Finished sequential sorts" << std::endl;
 
 	// Concurrent Quick Sort
 	for(int i = 0; i < 10; i++)

@@ -15,7 +15,7 @@ int pivot(ArrayType& theArray, int first, int mid, int last)
     if ((first_val != mid_val) || (first_val != last_val) || (mid_val != last_val))
     {
         // pick median value
-        pivotVal = std::max(std::min(first_val, last_val), std::min(std::max(first_val, last_val), mid_val))
+        pivotVal = std::max(std::min(first_val, last_val), std::min(std::max(first_val, last_val), mid_val));
         
         // Find the index that goes with that value
         if(pivotVal == first_val)
@@ -48,24 +48,24 @@ int pivot(ArrayType& theArray, int first, int mid, int last)
     return pivotIndex;
 }
 
-void myqsort(ArrayType& theArray, int first, int last, bool con)
+void myqsort(ArrayType& theArray, int first, int mid, int last, bool con)
 {
     if(first < last)
     {
-        pivotIndex = partition(theArray, first, last);
+        int pivotIndex = pivot(theArray, first, mid, last);
         
         if(con)
         {
-        	auto fut0 = std::async(std::launch::async, &myqsort, std::ref(theArray), first, pivotIndex, con);
-      		auto fut1 = std::async(std::launch::async, &myqsort, std::ref(theArray), pivotIndex + 1, last, con);
+        	auto fut0 = std::async(std::launch::async, &myqsort, std::ref(theArray), first, (pivotIndex-first)/2, pivotIndex, con);
+      		auto fut1 = std::async(std::launch::async, &myqsort, std::ref(theArray), pivotIndex + 1, (last-pivotIndex-1)/2, last, con);
 
             fut0.get();
             fut1.get();
         }
         else
         {
-        	myqsort(theArray, first, pivotIndex, con);
-        	myqsort(theArray, pivotIndex + 1, last, con);	
+        	myqsort(theArray, first, (pivotIndex-first)/2, pivotIndex, con);
+        	myqsort(theArray, pivotIndex + 1, (last-pivotIndex-1)/2, last, con);	
         }
         
     }
