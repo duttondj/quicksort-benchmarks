@@ -4,14 +4,19 @@
 #include <thread>
 #include <future>
 #include <iostream>
+#include "fill_normal.h"
+#include "myqsort.h"
 
+#ifndef _ARRAYTYPE
+#define _ARRAYTYPE
 typedef std::vector<double> ArrayType;
+#endif
 
 int main()
 {
-	std::std::vector<double> sorttimes;
+	std::vector<double> sorttimes;
 
-	std::cout << "Running quick sort benchmarks, please wait" << endl;
+	std::cout << "Running quick sort benchmarks, please wait" << std::endl;
 	// Run sequential quick sort (would be better to put this in own thread)
 	for(int i = 0; i < 10; i++)
 	{
@@ -30,7 +35,7 @@ int main()
 
 			// Record start time, run sort, record stop time
 			start = std::chrono::system_clock::now();
-			qsort(data, 0, data.size()/2, data.size()-1, 0);
+			myqsort(data, 0, data.size()/2, data.size()-1, 0);
 			end = std::chrono::system_clock::now();
 			
 			// Save and display sort time for array size
@@ -60,7 +65,7 @@ int main()
 
 			// Record start time, run sort, record stop time
 			start = std::chrono::system_clock::now();
-			qsort(data, 0, data.size()/2, data.size()-1, 1);
+			myqsort(data, 0, data.size()/2, data.size()-1, 1);
 			end = std::chrono::system_clock::now();
 			
 			// Save and display sort time for array size
@@ -70,8 +75,8 @@ int main()
 		}
 	}
 
-	std::cout << "Finished concurrent sorts" << end;
-	std::cout << "Done" << endl;
+	std::cout << "Finished concurrent sorts" << std::endl;
+	std::cout << "Done" << std::endl;
 	
 	return 0;
 }
