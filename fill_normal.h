@@ -5,6 +5,10 @@
 #include <future>
 #include <iostream>
 
+#ifndef _FILL_NORMAL
+#define _FILL_NORMAL
+
+
 // Functor number generator using normal distribution
 class fill_normal
 {
@@ -22,3 +26,5 @@ private:
   // Use normal distribution
   std::normal_distribution<double> p; 
 };
+
+#endif
