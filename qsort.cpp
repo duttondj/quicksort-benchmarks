@@ -11,13 +11,41 @@ int pivot(ArrayType& theArray, int first, int mid, int last)
 {
 
     double first_val = theArray[first];
-    double pivotIndex = first;
+    double mid_val = theArray[mid];
+    double last_val = theArray[last];
+    double pivotIndex;
+    double pivotVal;
 
+
+    // Median-of-three
+    // First check if any values are equal to eachother
+    if ((first_val != mid_val) || (first_val != last_val) || (mid_val != last_val))
+    {
+        // pick median value
+        pivotVal = std::max(std::min(first_val, last_val), std::min(std::max(first_val, last_val), mid_val))
+        
+        // Find the index that goes with that value
+        if(pivotVal == first_val)
+            pivotIndex = first_val;
+        if(pivotVal == mid_val)
+            pivotIndex = mid_val;
+        if(pivotVal == last_val)
+            pivotIndex = last_val;
+    }
+    // Hoare partition scheme
+    // At least two values are identical so just pick first element as pivot
+    else
+    {
+        pivotIndex = first;
+        pivotVal = first_val;
+    }
+
+    // Actually do the quick sort
     for(int i = first + 1; i < last; i++)
     {
-        if (theArray[i] <= first_val)
+        if (theArray[i] <= pivotVal)
         {
-            pivotIndex = first1 + 1;
+            pivotIndex = pivotIndex + 1;
             std::swap(theArray[pivotIndex],theArray[i]);
         }
 
@@ -27,11 +55,14 @@ int pivot(ArrayType& theArray, int first, int mid, int last)
     return pivotIndex;
 }
 
-void qsort(ArrayType& theArray, int first, int mid, int last, bool con)
+//median = max(min(a,b), min(max(a,b),c));
+
+
+void qsort(ArrayType& theArray, int first, int last, bool con)
 {
     if(first < last)
     {
-        pivotIndex = pivot(theArray, first, mid last);
+        pivotIndex = partition(theArray, first, last);
         
         if(con)
         {
