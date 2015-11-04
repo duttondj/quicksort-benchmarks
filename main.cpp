@@ -23,6 +23,8 @@ int main()
 	{
 		for (int i = 0; i < 10; i++)
 		{
+			double tempsum = 0;
+
 			// Create vector of doubles and a fill_normal object		
 			ArrayType data(N);
 			fill_normal d;
@@ -39,7 +41,7 @@ int main()
 			start = std::chrono::system_clock::now();
 			myqsort(data, 0, data.size()-1, false);
 			end = std::chrono::system_clock::now();
-			
+
 			// Save and display sort time for array size
 			elapsed_seconds = end-start;
 			sorttimes.push_back(elapsed_seconds.count());
@@ -75,15 +77,6 @@ int main()
 			elapsed_seconds = end-start;
 			sorttimes.push_back(elapsed_seconds.count());
 			std::cout << N <<  "\t" << elapsed_seconds.count() << std::endl;
-
-			// for (long i = 1; i < data.size(); i++)
-			// {
-			// 	if (data[i-1] > data[i])
-			// 	{
-			// 		std::cout << "nosorted" << std::endl;
-			// 	}
-			// }
-
 		}
 	}
 
