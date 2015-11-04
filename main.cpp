@@ -1,3 +1,14 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//	Title: 	main.cpp
+//	Author:	Danny Dutton
+//	Date:	11/03/15
+//	Desc:	The is a benchmark application for testing a sequential and a
+//			concurrent quick sort using 7 different list size with 10 trials
+//			each. Statistics are outputed to a text file.
+//
+////////////////////////////////////////////////////////////////////////////////
+
 #include <cstdio>
 #include <cmath>
 #include "fill_normal.h"
@@ -18,13 +29,11 @@ int main()
 	std::vector<double> avgtimes;
 
 	std::cout << "Running quick sort benchmarks, please wait" << std::endl;
-	// Run sequential quick sort (would be better to put this in own thread)
+	// Run sequential quick sort
 	for (long N = 1; N <= 1000000; N = 10*N)
 	{
 		for (int i = 0; i < 10; i++)
 		{
-			double tempsum = 0;
-
 			// Create vector of doubles and a fill_normal object		
 			ArrayType data(N);
 			fill_normal d;
@@ -111,6 +120,8 @@ int main()
 		maxtimes.push_back(max);
 		avgtimes.push_back(sum/10.0);
 	}
+
+	std::cout << "Check quicksort_report.txt for statistics" << std::endl;
 
 	FILE * pFile;
 	char str [112];

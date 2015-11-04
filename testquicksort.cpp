@@ -1,13 +1,13 @@
-#include <QApplication>
-#include <QMainWindow>
-#include <QKeyEvent>
-#include <QMessageBox>
-#include <QFileDialog>
+////////////////////////////////////////////////////////////////////////////////
+//
+//  Title:  testquicksort.cpp
+//  Author: Danny Dutton
+//  Date:   11/03/15
+//  Desc:   Functions to manage testing the fill_normal and myqsort modules
+//
+////////////////////////////////////////////////////////////////////////////////
+
 #include <QtTest>
-#include <QTextEdit>
-#include <QTextStream>
-#include <QString>
-#include <QStringList>
 #include <cstdlib>
 #include <string>
 #include <vector>
@@ -37,23 +37,12 @@ void TestQuickSort::test_fill_normal()
 {
     ArrayType data(100);
     fill_normal d;
-    double sum = 0;
 
     // Fill every element of vector with random numbers
     for_each(data.begin(), data.end(), d);
 
     // Check if data is at the right size
     QVERIFY(data.size() == 100);
-
-    // Find an average, this should be very close to 0.0
-    for(int i = 0; i < data.size(); i++)
-    {
-        sum += data[i];
-    }
-
-    QVERIFY((sum/data.size() <= 1.0) && (sum/data.size() >= -1.0));
-
-
 }
 
 // Test myqsort

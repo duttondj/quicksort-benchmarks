@@ -1,3 +1,12 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  Title:  myqsort.cpp
+//  Author: Danny Dutton
+//  Date:   11/03/15
+//  Desc:   Functions to manage a sequential and concurrent quick sort
+//
+////////////////////////////////////////////////////////////////////////////////
+
 #include "myqsort.h"
 
 const long SWITCH_SIZE = 1000; 
@@ -27,7 +36,7 @@ long partition(ArrayType& theArray, long first, long mid, long last)
         pivotIndex = last;
     }
 
-    double pivotVal = theArray[pivotIndex];
+    auto pivotVal = theArray[pivotIndex];
     long i = first - 1;
     long j = last + 1;
 
@@ -65,6 +74,7 @@ void myqsort(ArrayType& theArray, long first, long last, bool con)
         // Get pivot index (median of three)
         long pivotIndex = partition(theArray, first, mid, last);
 
+        // Run concurrent threads
         if(con && ((last-first) > SWITCH_SIZE))
         {
             std::future<void> fut0 = std::async(std::launch::async, &myqsort, std::ref(theArray), first, pivotIndex, con);
@@ -73,6 +83,7 @@ void myqsort(ArrayType& theArray, long first, long last, bool con)
             fut0.get();
             fut1.get();
         }
+        // Run sequential
         else
         {
             myqsort(theArray, first, pivotIndex, con);
