@@ -1,9 +1,9 @@
 #include "myqsort.h"
 
-int partition(ArrayType& theArray, int first, int mid, int last)
+long partition(ArrayType& theArray, long first, long mid, long last)
 {
-
-    int pivotIndex;
+    // Long pivot index since first and long could be outside the int16 range
+    long pivotIndex;
 
     // Find the pivot index
     // Check if first element is more than middle element
@@ -25,34 +25,56 @@ int partition(ArrayType& theArray, int first, int mid, int last)
         pivotIndex = last;
     }
 
-    // Swap the pivot and the first elements
-    std::swap(theArray[pivotIndex], theArray[first]);
-    pivotIndex = first;
+    double pivotVal = theArray[pivotIndex];
+    long i = first - 1;
+    long j = last + 1;
 
-    // Actually do the quick sort
-    for ( int i = first; i < last; i++)
+    while(true)
     {
-        if (theArray[i] <= theArray[last])
-        {
-            pivotIndex++;
-            std::swap(theArray[pivotIndex],theArray[i]);
-        }
-    }
+        // Find the last value above the pivot value
+        do{
+            j--;
+        }while(theArray[j] > pivotVal);
 
-    std::swap(theArray[pivotIndex],theArray[last]);
-    return pivotIndex;
+        // Find the first value below the pivot
+        do{
+            i++;
+        }while(theArray[i] < pivotVal);
+
+        // Check if the first below is less than the last above
+        if (i < j)
+        {
+            // Swap the two values
+            std::swap(theArray[i], theArray[j]);
+        }
+        //
+        else
+            return j;
+    }
 }
 
-void myqsort(ArrayType& theArray, int first, int last, bool con)
+void myqsort(ArrayType& theArray, long first, long last, bool con)
 {
     if(first < last)
     {
-        //std::cout << "." << std::endl;
-        int mid = (first + last) / 2;
-        int pivotIndex = partition(theArray, first, mid, last);
+        // Find mid point
+        long mid = (first + last)/2;
         
+        // Get pivot index
+        long pivotIndex = partition(theArray, first, mid, last);
         
-        myqsort(theArray, first, pivotIndex -1, con);
-        myqsort(theArray, pivotIndex + 1, last, con);
+        if(con)
+        {
+            std::future<void> fut0 = std::async(std::launch::async, &myqsort, std::ref(theArray), first, pivotIndex, con);
+            std::future<void> fut1 = std::async(std::launch::async, &myqsort, std::ref(theArray), pivotIndex + 1, last, con);
+
+            fut0.get();
+            fut1.get();
+        }
+        else
+        {
+            myqsort(theArray, first, pivotIndex, con);
+            myqsort(theArray, pivotIndex+1, last, con);
+        }
     }
 }

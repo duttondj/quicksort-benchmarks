@@ -80,7 +80,7 @@ int main()
 			// Save and display sort time for array size
 			elapsed_seconds = end-start;
 			sorttimes.push_back(elapsed_seconds.count());
-			//std::cout << N <<  "\t" << elapsed_seconds.count() << std::endl;
+			std::cout << N <<  "\t" << elapsed_seconds.count() << std::endl;
 		}
 	}
 

@@ -13,8 +13,8 @@
 typedef std::vector<double> ArrayType;
 #endif
 
-int partition(ArrayType& theArray, int first, int mid, int last);
+long partition(ArrayType& theArray, long first, long last);
 
-void myqsort(ArrayType& theArray, int first, int last, bool con);
+void myqsort(ArrayType& theArray, long first, long last, bool con);
 
 #endif
