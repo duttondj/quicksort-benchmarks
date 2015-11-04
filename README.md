@@ -1,6 +1,6 @@
                                                                    Danny Dutton
                                                                        11/03/15
-                        **Quick Sort with Concurrency**
+                        # Quick Sort with Concurrency #
 
 The quick sort I implemented is based on the Hoare partition scheme[0]. 
 The algorithm looks are the first and last indicies of the vector and then 
