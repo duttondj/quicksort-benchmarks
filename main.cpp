@@ -1,9 +1,3 @@
-#include <vector>
-#include <algorithm>
-#include <random>
-#include <thread>
-#include <future>
-#include <iostream>
 #include <cstdio>
 #include <cmath>
 #include "fill_normal.h"
@@ -81,6 +75,15 @@ int main()
 			elapsed_seconds = end-start;
 			sorttimes.push_back(elapsed_seconds.count());
 			std::cout << N <<  "\t" << elapsed_seconds.count() << std::endl;
+
+			// for (long i = 1; i < data.size(); i++)
+			// {
+			// 	if (data[i-1] > data[i])
+			// 	{
+			// 		std::cout << "nosorted" << std::endl;
+			// 	}
+			// }
+
 		}
 	}
 
@@ -99,15 +102,15 @@ int main()
 		for (int j = 0; j < 10; j++)
 		{
 			// Check if time is less than the current min
-			if (sorttimes[i*j] < min)
-				min = sorttimes[i*j];
+			if (sorttimes[(i*10)+j] < min)
+				min = sorttimes[(i*10)+j];
 			
 			// Check if time is more than the current max
-			if (sorttimes[i*j] > max)
-				max = sorttimes[i*j];
+			if (sorttimes[(i*10)+j] > max)
+				max = sorttimes[(i*10)+j];
 			
 			// Add time to running total
-			sum += sorttimes[i*j];
+			sum += sorttimes[(i*10)+j];
 		}
 
 		// Save min, max, and computed mean
@@ -116,14 +119,22 @@ int main()
 		avgtimes.push_back(sum/10.0);
 	}
 
-	std::cout << "List Size    Sequential Sort Time (s)                           Concurrent Sort Time (s)" << std::endl;
-	std::cout << "             min              max              average          min              max              average" << std::endl;
-	std::cout << "---------    -------------    -------------    -------------    -------------    -------------    -------------" << std::endl;
+	FILE * pFile;
+	char str [112];
+
+	pFile = fopen("quicksort_report.txt", "w");
+
+	fprintf(pFile, "Quick Sort Results - Danny Dutton\n");
+	fprintf(pFile, "List Size    Sequential Sort Time (s)                           Concurrent Sort Time (s)\n");
+	fprintf(pFile, "             min              max              average          min              max              average\n");
+	fprintf(pFile, "---------    -------------    -------------    -------------    -------------    -------------    -------------\n");
 	
 	for (int i = 0; i < 7; i++)
 	{
-		printf("%-12d %-8e     %-8e     %-8e     %-8e     %-8e     %-8e\n", (int)pow(10,i), mintimes[i], maxtimes[i], avgtimes[i], mintimes[i+7], maxtimes[i+7], avgtimes[i+7]);
+		fprintf(pFile, "%-12d %-8e     %-8e     %-8e     %-8e     %-8e     %-8e\n", (int)pow(10,i), mintimes[i], maxtimes[i], avgtimes[i], mintimes[i+7], maxtimes[i+7], avgtimes[i+7]);
 	}
+
+	fclose(pFile);
 	
 	return 0;
 }

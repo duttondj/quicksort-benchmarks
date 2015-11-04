@@ -1,5 +1,7 @@
 #include "myqsort.h"
 
+const long SWITCH_SIZE = 1000; 
+
 long partition(ArrayType& theArray, long first, long mid, long last)
 {
     // Long pivot index since first and long could be outside the int16 range
@@ -57,17 +59,17 @@ void myqsort(ArrayType& theArray, long first, long last, bool con)
 {
     if(first < last)
     {
-        // Find mid point
+        // Find mid index
         long mid = (first + last)/2;
-        
-        // Get pivot index
+
+        // Get pivot index (median of three)
         long pivotIndex = partition(theArray, first, mid, last);
-        
-        if(con)
+
+        if(con && ((last-first) > SWITCH_SIZE))
         {
             std::future<void> fut0 = std::async(std::launch::async, &myqsort, std::ref(theArray), first, pivotIndex, con);
             std::future<void> fut1 = std::async(std::launch::async, &myqsort, std::ref(theArray), pivotIndex + 1, last, con);
-
+            
             fut0.get();
             fut1.get();
         }
