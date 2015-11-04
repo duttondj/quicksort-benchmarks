@@ -9,7 +9,7 @@
 
 #include "myqsort.h"
 
-const long SWITCH_SIZE = 1000; 
+const long SWITCH_SIZE = 10000; 
 
 long partition(ArrayType& theArray, long first, long mid, long last)
 {
@@ -37,22 +37,24 @@ long partition(ArrayType& theArray, long first, long mid, long last)
     }
 
     auto pivotVal = theArray[pivotIndex];
-    long i = first - 1;
-    long j = last + 1;
+    long i = first;
+    long j = last;
 
     while(true)
     {
-        // Find the last value above the pivot value
-        do{
+        // Find the last value below the pivot value
+        while(theArray[j] > pivotVal)
+        {
             j--;
-        }while(theArray[j] > pivotVal);
+        }
 
-        // Find the first value below the pivot
-        do{
+        // Find the first value above the pivot value
+        while(theArray[i] < pivotVal)
+        {
             i++;
-        }while(theArray[i] < pivotVal);
+        }
 
-        // Check if the first below is less than the last above
+        // Check if the first above is less than the last below
         if (i < j)
         {
             // Swap the two values
