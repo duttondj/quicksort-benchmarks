@@ -1,0 +1,1 @@
+/usr/bin/c++    -std=c++11 -pthread -O3 -DNDEBUG   CMakeFiles/testquicksort.dir/testquicksort.cpp.o CMakeFiles/testquicksort.dir/myqsort.cpp.o CMakeFiles/testquicksort.dir/fill_normal.cpp.o CMakeFiles/testquicksort.dir/testquicksort_automoc.cpp.o  -o testquicksort -rdynamic /usr/lib64/libQtGui.so /usr/lib64/libQtTest.so /usr/lib64/libQtCore.so 
